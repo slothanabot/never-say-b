@@ -37,6 +37,8 @@ def check_line(line):
         raise SystemExit("entry has leading or trailing whitespace")
     if any(ch in line for ch in ("\n", "\r")):
         raise SystemExit("entry must be a single line")
+    if any(ord(ch) < 32 and ch != "\t" for ch in line):
+        raise SystemExit("entry must not contain control characters")
     if not 1 <= len(line) <= MAX_CHARS:
         raise SystemExit(
             "entry is %d chars; gate wants 1-%d" % (len(line), MAX_CHARS)
